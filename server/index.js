@@ -8,7 +8,7 @@ const API_PORT = require("./config").port;
 const app = express();
 
 // mongo
-mongoose.connect(getSecret("dbUri"));
+mongoose.connect(getSecret("dbUri"), { useUnifiedTopology: true });
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
