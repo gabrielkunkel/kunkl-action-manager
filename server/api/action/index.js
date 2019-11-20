@@ -3,8 +3,8 @@ import controller from "./action.controller"
 
 let router = new Router()
 
-router.post("/add", controller.add_one) // { user: [ userID] }
-router.get("/get_all", controller.get_all_of_user) 
-router.get("/get_one", controller.get_one_of_user)
+router.post("/add-or-update", controller.add_one_or_update) // api/actions/add-or-update
+router.get("/get-all", controller.get_all_of_user) // api/actions/get-all
+router.get("/get-one", controller.get_one) // api/actions/get-one
 
 module.exports = router
