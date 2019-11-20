@@ -1,0 +1,12 @@
+{
+  "name": "kunkl-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "concurrently \"cd server && node index.js\" \"cd client && npm start\""
+  },
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
