@@ -1,9 +1,10 @@
 import mongoose from "mongoose"
-import config from "../config"
+import config from "../../config"
 
 const roles = config.userRoles
 
 const UserSchema = new mongoose.Schema({
+  _id: String,
   firstName: String,
   lastName: String,
   email: String,
