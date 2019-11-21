@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "../../node_modules/react";
 
 class App extends Component {
   state = {
@@ -19,7 +19,6 @@ class App extends Component {
 
   render() {
    
-    const { data } = this.state;
    
     return (
       <div>
