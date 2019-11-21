@@ -1,4 +1,8 @@
 import React, { Component } from "../../node_modules/react";
+import { Route } from "react-router-dom";
+import Home from "./Home";
+import Profile from "./Profile";
+import { Nav } from "./Nav";
 
 class App extends Component {
   state = {
@@ -22,7 +26,11 @@ class App extends Component {
    
     return (
       <div>
-         Welcome to a React Application.
+        <Nav />
+        <div className="body">
+         <Route path="/" exact component={Home} />
+         <Route path="/profile" component={Profile} />
+         </div>
       </div>
     );
   }
