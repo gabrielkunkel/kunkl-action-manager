@@ -1,3 +1,11 @@
+
+
+# hide extra
 node_modules/
-secret.js
 trash
+
+# secrets
+secret.js
+config/secret.js
+secret
+.env

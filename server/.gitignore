@@ -4,6 +4,7 @@
 secret.js
 config/secret.js
 secret
+.env
 
 # dependencies
 /node_modules
