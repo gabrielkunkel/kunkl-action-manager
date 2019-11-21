@@ -3,13 +3,14 @@ const getSecret = require("./config/secret");
 const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-const config = require("./config");
+import secret from './config/secret'
+import config from './config'
 
 const API_PORT = config.port;
 const app = express();
 
 // mongo
-mongoose.connect(getSecret("dbUri"));
+mongoose.connect(secret.dbUri);
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
