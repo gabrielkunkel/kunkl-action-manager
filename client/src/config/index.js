@@ -1,7 +1,4 @@
 export default {
-    api: {
-        server: 'localhost:3001/api'
-    },
     apiRoutes: {
         addAction: '/actions/add-or-update',
         updateAction: '/actions/add-or-update',

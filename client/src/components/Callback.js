@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
-import config from "../Config";
 
 class Callback extends Component {
 

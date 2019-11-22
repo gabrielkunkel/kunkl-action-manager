@@ -13,7 +13,7 @@ export function checkJwt() {
           }/.well-known/jwks.json`
         }),
       
-        audience: config.auth0Audience,
+        audience: secret.auth0Audience,
         issuer: `https://${secret.auth0Domain}/`,
       
         algorithms: ["RS256"]
