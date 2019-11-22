@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 import secret from './config/secret'
 import config from './config'
+import cors from 'cors'
 
 const API_PORT = config.port;
 const app = express();
@@ -17,6 +18,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
+app.use(cors());
 
 require("./api").default(app)
 

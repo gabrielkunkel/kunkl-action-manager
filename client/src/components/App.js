@@ -1,9 +1,10 @@
 import React, { Component } from "../../node_modules/react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Home from "./Home";
 import Profile from "./Profile";
 import { Nav } from "./Nav";
 import Auth from "../Auth/Auth"
+import Callback from "./Callback";
 
 class App extends Component {
 
@@ -16,28 +17,32 @@ class App extends Component {
     data: [],
   };
 
-  componentDidMount() {
-
-  }
-
-  componentDidUpdate() { 
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   render() {
-   
    
     return (
       <div>
-        <Nav />
+       <Nav auth={this.auth} />
         <div className="body">
-          <Route path="/" exact render={props => <Home auth={this.auth} {...props} />} />
-          <Route path="/profile" component={Profile} />
-         </div>
+          <Route
+            path="/"
+            exact
+            render={props => <Home auth={this.auth} {...props} />}
+          />
+          <Route
+            path="/profile"
+            render={props =>
+              this.auth.isAuthenticated() ? (
+                <Profile auth={this.auth} {...props} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route
+            path="/callback"
+            render={props => <Callback auth={this.auth} {...props} />}
+          />
+        </div>
       </div>
     );
   }

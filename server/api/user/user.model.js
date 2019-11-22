@@ -5,12 +5,10 @@ const roles = config.userRoles
 
 const UserSchema = new mongoose.Schema({
   _id: String,
-  firstName: String,
-  lastName: String,
+  name: String,
   email: String,
-  password: String,
-  phoneNumber: String,
-  role: { type: String, default: "guest", enum: roles, },
+  picture: String,
+  role: { type: String, default: "guest", enum: roles },
 }, {
   timestamps: true,
 })

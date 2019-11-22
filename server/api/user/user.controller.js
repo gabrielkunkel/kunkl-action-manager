@@ -2,7 +2,7 @@ import User from './user.model'
 
 export function add_edit_user(req, res) {
 
-    User.findOneAndUpdate({ _id: req.user._id }, req.user, { upsert: true, new: true }, function(err, doc) {
+    User.findOneAndUpdate({ _id: req.body._id }, req.body, { upsert: true, new: true, useFindAndModify: false }, function(err, doc) {
         if (err) return res.send(500, { error: err });
 
         return res.send(doc);
