@@ -1,6 +1,7 @@
 import React, { Component } from '../../node_modules/react'
+import {connect} from 'react-redux'
 
-export default class Home extends Component {
+class Home extends Component {
     render() {
         return (
             <div>
@@ -9,3 +10,7 @@ export default class Home extends Component {
         )
     }
 }
+
+export default connect((state, props) => {
+    return {}
+})(Home);
