@@ -8,6 +8,8 @@ var defaultState = {
 function actons(state = defaultState, action) {
   
         switch (action.type) {
+            case 'ADD_ACTON':
+                return Object.assign({}, state, { actons: [action.data.acton, ...state.actons ]} )
             case 'CHANGE_ACTIVE_ACTON':
                 return Object.assign({}, state, { active_action: action.data.text })
             default:
