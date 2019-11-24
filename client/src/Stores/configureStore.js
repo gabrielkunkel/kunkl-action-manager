@@ -2,16 +2,19 @@ import { createStore } from 'redux'
 
 var defaultState = {
     actons: [],
-    active_acton: {}
+    active_acton: {},
+    form: ''
 };
 
 function actons(state = defaultState, action) {
   
         switch (action.type) {
-            case 'ADD_ACTON':
-                return Object.assign({}, state, { actons: [action.data.acton, ...state.actons ]} )
             case 'CHANGE_ACTIVE_ACTON':
-                return Object.assign({}, state, { active_action: action.data.text })
+                return Object.assign({}, state, { active_action: action.data });
+            case 'ADD_ACTON':
+                return Object.assign({}, state, { actons: [action.data, ...state.actons]});
+            case 'UPDATE_ACTON_ADD_FORM':
+                return Object.assign({}, state, {form: action.data });
             default:
                 return state;
         }
