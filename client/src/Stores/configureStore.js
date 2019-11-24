@@ -1,4 +1,5 @@
-import { createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
+import logger from 'redux-logger'
 
 var defaultState = {
     actons: [],
@@ -21,6 +22,6 @@ function actons(state = defaultState, action) {
 
 }
 
-var store = createStore(actons);
+var store = createStore(actons, applyMiddleware(logger));
 
 export default store;
