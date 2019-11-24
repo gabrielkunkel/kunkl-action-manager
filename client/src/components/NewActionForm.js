@@ -1,6 +1,6 @@
 import React from 'react'
 
-class NewActonForm extends React.Component {
+class NewActionForm extends React.Component {
 
     render() {
 
@@ -17,4 +17,4 @@ class NewActonForm extends React.Component {
     }
 }
 
-export default NewActonForm;
+export default NewActionForm;

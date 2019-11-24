@@ -1,7 +1,7 @@
 // todo: switch to https://github.com/daniellmb/perfnow.js performance.now
 
-export default function generateUUID() { // Public Domain/MIT
-    var d = new Date().now();
+function generateUUID() { // Public Domain/MIT
+    var d = Date.now();
     var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16;
@@ -14,4 +14,8 @@ export default function generateUUID() { // Public Domain/MIT
         }
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
+}
+
+export {
+    generateUUID
 }

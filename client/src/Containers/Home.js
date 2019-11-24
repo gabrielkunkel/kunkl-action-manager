@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import Action from '../Components/Action'
+import { generateUUID } from '../Services/uuid.service'
 
-import NewActonForm from '../Components/NewActonForm'
+import NewActionForm from '../Components/NewActionForm'
 
 class Home extends Component {
 
@@ -18,22 +20,35 @@ class Home extends Component {
 
     handleTaskSubmit(event) {
         event.preventDefault();
-        this.props.dispatch({type: 'ADD_ACTON', data: this.props.form});
+
+        let action = {
+            _id: generateUUID(),
+            user: "test_id", // this.props.auth.userProfile.sub,
+            text: this.props.form,
+            complete: false,
+            parents: [],
+            children: [],
+            twins: []
+        };
+
+        this.props.dispatch({type: 'ADD_ACTION', data: action });
     }
 
     handleFormChange(event) {
-        let formUpdate = event.target.value;
-        this.props.dispatch({type: 'UPDATE_ACTON_ADD_FORM', data: formUpdate });
+        this.props.dispatch({type: 'UPDATE_ACTION_ADD_FORM', data: event.target.value });
     }
 
     render() {
         return (
             <div>
                 <h1>Home</h1>
-                <NewActonForm 
+                <NewActionForm 
                     handleTaskSubmit={this.handleTaskSubmit} 
                     handleFormChange={this.handleFormChange}
                 />
+                <br />
+                {this.props.actions.map(action => <Action key={action._id} action={action} />)}
+
             </div>
         )
     }
@@ -41,7 +56,7 @@ class Home extends Component {
 
 export default connect((state, props) => {
     return {
-        actons: state.actons,
+        actions: state.actions,
         form: state.form
     }
 })(Home);
