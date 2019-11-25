@@ -3,18 +3,22 @@ import {createLogger} from 'redux-logger'
 import thunk from 'redux-thunk'
 
 var defaultState = {
-    actions: [],
+    parent_actions: [],
+    text: "",
+    complete: false,
+    twin_actions: [],
+    child_actions: [],
     active_action: {},
     form: ''
 };
 
-function actons(state = defaultState, action) {
+function active_action(state = defaultState, action) {
   
         switch (action.type) {
             case 'CHANGE_ACTIVE_ACTION':
-                return Object.assign({}, state, { active_action: action.data });
+                return Object.assign({}, state, action.data );
             case 'ADD_ACTION':
-                return Object.assign({}, state, { actions: [action.data, ...state.actions]});
+                return Object.assign({}, state, { child_actions: [action.data, ...state.child_actions]});
             case 'UPDATE_ACTION_ADD_FORM':
                 return Object.assign({}, state, {form: action.data });
             default:
@@ -27,6 +31,6 @@ const logger = createLogger({
     collapsed: true
 });
 
-var store = createStore(actons, applyMiddleware(thunk,logger));
+var store = createStore(active_action, applyMiddleware(thunk,logger));
 
 export default store;

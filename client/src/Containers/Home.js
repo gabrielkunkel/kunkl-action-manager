@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import Action from '../Components/Action'
 import { generateUUID } from '../Services/uuid.service'
 
+import Action from '../Components/Action'
 import NewActionForm from '../Components/NewActionForm'
 
 class Home extends Component {
@@ -26,9 +26,9 @@ class Home extends Component {
             user: "test_id", // this.props.auth.userProfile.sub,
             text: this.props.form,
             complete: false,
-            parents: [],
-            children: [],
-            twins: []
+            parent_actions: [],
+            child_actions: [],
+            twin_actions: []
         };
 
         this.props.dispatch({type: 'ADD_ACTION', data: action });
@@ -47,7 +47,7 @@ class Home extends Component {
                     handleFormChange={this.handleFormChange}
                 />
                 <br />
-                {this.props.actions.map(action => <Action key={action._id} action={action} />)}
+                {this.props.child_actions.map(action => <Action key={action._id} action={action} />)}
 
             </div>
         )
@@ -56,7 +56,7 @@ class Home extends Component {
 
 export default connect((state, props) => {
     return {
-        actions: state.actions,
+        child_actions: state.child_actions,
         form: state.form
     }
 })(Home);
