@@ -34,6 +34,9 @@ class Home extends Component {
         };
 
         this.props.dispatch({type: 'ADD_ACTION', data: action });
+        this.props.dispatch({type: 'UPDATE_ACTION_ADD_FORM', data: '' });
+        event.target.reset();
+
     }
 
     handleFormChange(event) {
