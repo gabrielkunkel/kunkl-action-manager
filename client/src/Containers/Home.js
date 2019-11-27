@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { generateUUID } from '../Services/uuid.service'
+import { DndProvider} from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
-import Action from '../Components/Action'
+import ActionList from '../Components/ActionList'
 import NewActionForm from '../Components/NewActionForm'
 
 class Home extends Component {
@@ -47,7 +49,10 @@ class Home extends Component {
                     handleFormChange={this.handleFormChange}
                 />
                 <br />
-                {this.props.child_actions.map(action => <Action key={action._id} action={action} />)}
+                
+                <DndProvider backend={HTML5Backend}>
+                    <ActionList child_actions={this.props.child_actions} />
+                </DndProvider>
 
             </div>
         )

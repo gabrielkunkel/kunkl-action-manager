@@ -7,6 +7,9 @@ export default {
         addUser: '/users',
         updateUser: '/users',
         getUser: '/users/user'
+    },
+    ItemTypes: {
+        CHILD_ACTION: 'child_action'
     }
 
 }

@@ -1,6 +1,4 @@
-// todo: switch to https://github.com/daniellmb/perfnow.js performance.now
-
-function generateUUID() { // Public Domain/MIT
+function generateUUID() { 
     var d = Date.now();
     var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
