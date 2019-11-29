@@ -12,7 +12,6 @@ class SortDropZone extends Component {
 
         return (
             <div ref={drop} style={{
-                // backgroundColor: '#808080',
                 width: '90%',
                 height: '15px',
                 marginTop: '-7px',

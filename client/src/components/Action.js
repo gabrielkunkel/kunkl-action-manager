@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import withDragHOC from '../Hooks/withDragHOC'
 import config from '../Config'
+import { DropTarget } from 'react-dnd';
 
 class Action extends Component {
 
@@ -10,9 +11,9 @@ class Action extends Component {
     // };
 
     render() {
-        var {collectedProps, drag, action} = this.props;
+        var {collectedProps, drag, action, connectDropTarget} = this.props;
 
-        return (
+        return connectDropTarget(
             <div ref={drag} style={{
                 opacity: collectedProps.isDragging ? 0 : 1,
                 fontSize: 25,
@@ -39,4 +40,12 @@ function specObjReturned(action) {
         }     
 }
 
-export default withDragHOC(specObjReturned, Action);
+Action = withDragHOC(specObjReturned, Action);
+
+Action = DropTarget(config.ItemTypes.CHILD_ACTION, {
+    drop: (props, monitor) => {
+        console.log("drop target props:", props);
+    }
+}, connect => ({ connectDropTarget: connect.dropTarget() }))(Action);
+
+export default Action;
