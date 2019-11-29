@@ -22,36 +22,33 @@ class Home extends Component {
         console.log("from home component state: ", this.state);
     }
 
-    insertUpdateChildActions(childActionToNewPosition, position) {
+    insertUpdateChildActions(childActionToNewPosition, newPosition) {
 
-        let newChildActions = [];
-        let i = 0;
-        let child_actions_iterator = 0;
+        // index of
+        let oldPosition = this.props.child_actions.indexOf(childActionToNewPosition); // todo: does it check whole objects?
+        console.log("old position: ", oldPosition);
+        console.log("new position: ", newPosition);
 
-        console.log("child action to new position is: ", childActionToNewPosition);
-        console.log("new position should be: ", position);
-
-        while (child_actions_iterator < this.props.child_actions.length && i < 10) {
-            
-            console.log("new child array is now: ", newChildActions);
-            console.log("iterator is now: ", i);
-
-            if (position === i ) {
-                newChildActions.push(childActionToNewPosition);
-                i += 1;
-            }
-            else if (this.props.child_actions[child_actions_iterator]._id === childActionToNewPosition._id) {
-                i += 1;
-                child_actions_iterator += 1;
-            }
-            else {
-                newChildActions.push(this.props.child_actions[child_actions_iterator]);
-                i += 1;
-                child_actions_iterator += 1;
-            }
+        if (oldPosition < newPosition) {
+            newPosition -= 1;
         }
 
-        this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newChildActions});
+        // slice left around index
+        let leftArr = this.props.child_actions.slice(0, oldPosition);
+        console.log("left slice: ", leftArr);
+
+        // slice right around index
+        let rightArr = this.props.child_actions.slice(oldPosition + 1, this.props.child_actions.length);
+        console.log("right slice: ", leftArr);
+
+        // concatenate left and right
+        let newArray = [].concat(leftArr, rightArr);
+        console.log("complete array: ", newArray);
+
+        // splice to insert
+        newArray.splice(newPosition, 0, childActionToNewPosition);
+
+        this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray});
 
     }
 
