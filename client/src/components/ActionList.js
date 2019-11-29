@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Action from './Action'
+import DndDuo from "./DndDuo";
+import SortDropZone from "./SortDropZone";
 
 export default class ActionList extends Component {
 
@@ -9,7 +10,8 @@ export default class ActionList extends Component {
 
         return (
             <div>
-                {child_actions.map(action => <Action key={action._id} action={action} />)}
+                <SortDropZone position={0} />
+                {child_actions.map((action, index) => <DndDuo key={action._id} action={action} position={index+1} />)}
             </div>
         )
     }

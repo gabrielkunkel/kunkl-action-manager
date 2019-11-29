@@ -14,10 +14,12 @@ class Action extends Component {
 
         return (
             <div ref={drag} style={{
-                opacity: collectedProps.isDragging ? 0.5 : 1,
+                opacity: collectedProps.isDragging ? 0 : 1,
                 fontSize: 25,
                 fontWeight: 'bold',
                 cursor: 'move',
+                padding: '3px',
+                margin: '3px'
               }}> 
                 <div>{action.text}</div>
             </div>
@@ -29,6 +31,7 @@ let specObj = {
     item: { type: config.ItemTypes.CHILD_ACTION }, 
     collect: monitor => ({
         isDragging: !!monitor.isDragging(),
+        // add endDrag method for what to do when it is dropped
     }),
 }
 
