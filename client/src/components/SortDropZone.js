@@ -4,19 +4,17 @@ import config from '../Config'
 
 class SortDropZone extends Component {
 
-    // componentDidMount() {
-    //     console.log("SortDropZone", this.props)
-    // }
-
     render() {
 
-        var {collectedProps, drop, position, insertUpdateChildActions} = this.props;
+        var {drop} = this.props;
 
         return (
             <div ref={drop} style={{
-                backgroundColor: '#808080',
+                // backgroundColor: '#808080',
                 width: '90%',
-                height: '5px',
+                height: '15px',
+                marginTop: '-7px',
+                marginBottom: '-7px'
               }}>
                 
             </div>

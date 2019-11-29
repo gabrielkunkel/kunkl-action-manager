@@ -25,7 +25,7 @@ class Home extends Component {
     insertUpdateChildActions(childActionToNewPosition, newPosition) {
 
         // index of
-        let oldPosition = this.props.child_actions.indexOf(childActionToNewPosition); // todo: does it check whole objects?
+        let oldPosition = this.props.child_actions.indexOf(childActionToNewPosition);
         console.log("old position: ", oldPosition);
         console.log("new position: ", newPosition);
 
