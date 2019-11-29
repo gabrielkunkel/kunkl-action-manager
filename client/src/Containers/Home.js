@@ -15,6 +15,7 @@ class Home extends Component {
         this.handleTaskSubmit = this.handleTaskSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
         this.insertUpdateChildActions = this.insertUpdateChildActions.bind(this);
+        this.nestChildAction = this.nestChildAction.bind(this);
     }
 
     componentDidMount() {
@@ -52,6 +53,23 @@ class Home extends Component {
 
     }
 
+    nestChildAction(actionToNest, newParentAction) {
+
+        // update the newParentAction
+        let position = this.props.child_actions.indexOf(newParentAction);
+        let newArray = [...this.props.child_actions];
+        newArray[position].child_actions.push(actionToNest._id);
+
+        // todo: add async call to update that actions child_actions on db
+        // insert update newParentAction post here
+
+        // update the primary list to no longer have that action
+        newArray = newArray.filter(item => {
+            return item._id !== actionToNest._id;
+        });
+
+        this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray});
+    }
 
     handleTaskSubmit(event) {
         event.preventDefault();
@@ -69,7 +87,6 @@ class Home extends Component {
         this.props.dispatch({type: 'ADD_ACTION', data: action });
         this.props.dispatch({type: 'UPDATE_ACTION_ADD_FORM', data: '' });
         event.target.reset();
-
     }
 
     handleFormChange(event) {
@@ -87,7 +104,11 @@ class Home extends Component {
                 <br />
                 
                 <DndProvider backend={HTML5Backend}>
-                    <ActionList child_actions={this.props.child_actions} insertUpdateChildActions={this.insertUpdateChildActions}/>
+                    <ActionList 
+                        child_actions={this.props.child_actions} 
+                        insertUpdateChildActions={this.insertUpdateChildActions}
+                        nestChildAction={this.nestChildAction}
+                    />
                 </DndProvider>
 
             </div>

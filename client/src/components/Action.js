@@ -44,7 +44,15 @@ Action = withDragHOC(specObjReturned, Action);
 
 Action = DropTarget(config.ItemTypes.CHILD_ACTION, {
     drop: (props, monitor) => {
-        console.log("drop target props:", props);
+        console.log("drop target props: ", props);
+        console.log("monitor getItem: ", monitor.getItem());
+        // props reflects the drop target info
+        // monitor getItem should get us the data from draggable
+
+        const item = monitor.getItem();
+
+        props.nestChildAction(item.action, props.action);
+
     }
 }, connect => ({ connectDropTarget: connect.dropTarget() }))(Action);
 
