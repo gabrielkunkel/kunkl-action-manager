@@ -21,6 +21,8 @@ function active_action(state = defaultState, action) {
                 return Object.assign({}, state, { child_actions: [action.data, ...state.child_actions]});
             case 'UPDATE_ACTION_ADD_FORM':
                 return Object.assign({}, state, {form: action.data });
+            case 'REPLACE_CHILD_ACTIONS':
+                return Object.assign({}, state, { child_actions: action.data} )
             default:
                 return state;
         }

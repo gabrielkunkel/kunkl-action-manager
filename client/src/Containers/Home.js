@@ -14,11 +14,47 @@ class Home extends Component {
 
         this.handleTaskSubmit = this.handleTaskSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
+        this.insertUpdateChildActions = this.insertUpdateChildActions.bind(this);
     }
 
     componentDidMount() {
-        console.log("from component", this.props);
+        console.log("from home component props: ", this.props);
+        console.log("from home component state: ", this.state);
     }
+
+    insertUpdateChildActions(childActionToNewPosition, position) {
+
+        let newChildActions = [];
+        let i = 0;
+        let child_actions_iterator = 0;
+
+        console.log("child action to new position is: ", childActionToNewPosition);
+        console.log("new position should be: ", position);
+
+        while (child_actions_iterator < this.props.child_actions.length && i < 10) {
+            
+            console.log("new child array is now: ", newChildActions);
+            console.log("iterator is now: ", i);
+
+            if (position === i ) {
+                newChildActions.push(childActionToNewPosition);
+                i += 1;
+            }
+            else if (this.props.child_actions[child_actions_iterator]._id === childActionToNewPosition._id) {
+                i += 1;
+                child_actions_iterator += 1;
+            }
+            else {
+                newChildActions.push(this.props.child_actions[child_actions_iterator]);
+                i += 1;
+                child_actions_iterator += 1;
+            }
+        }
+
+        this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newChildActions});
+
+    }
+
 
     handleTaskSubmit(event) {
         event.preventDefault();
@@ -54,7 +90,7 @@ class Home extends Component {
                 <br />
                 
                 <DndProvider backend={HTML5Backend}>
-                    <ActionList child_actions={this.props.child_actions} />
+                    <ActionList child_actions={this.props.child_actions} insertUpdateChildActions={this.insertUpdateChildActions}/>
                 </DndProvider>
 
             </div>

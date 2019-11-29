@@ -5,9 +5,9 @@ import config from '../Config'
 class Action extends Component {
 
 
-    componentDidMount() {
-        console.log("action component props", this.props)
-    };
+    // componentDidMount() {
+    //     console.log("action component props", this.props)
+    // };
 
     render() {
         var {collectedProps, drag, action} = this.props;
@@ -27,12 +27,16 @@ class Action extends Component {
     }
 }
 
-let specObj = {
-    item: { type: config.ItemTypes.CHILD_ACTION }, 
-    collect: monitor => ({
-        isDragging: !!monitor.isDragging(),
-        // add endDrag method for what to do when it is dropped
-    }),
+function specObjReturned(action) {
+        return {
+            item: { 
+                type: config.ItemTypes.CHILD_ACTION,
+                action: action
+            }, 
+            collect: monitor => ({
+                isDragging: !!monitor.isDragging(),
+            }),
+        }     
 }
 
-export default withDragHOC(specObj, Action);
+export default withDragHOC(specObjReturned, Action);
