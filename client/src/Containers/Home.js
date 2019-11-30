@@ -18,17 +18,10 @@ class Home extends Component {
         this.nestChildAction = this.nestChildAction.bind(this);
     }
 
-    componentDidMount() {
-        console.log("from home component props: ", this.props);
-        console.log("from home component state: ", this.state);
-    }
-
     insertUpdateChildActions(childActionToNewPosition, newPosition) {
 
         // index of
         let oldPosition = this.props.child_actions.indexOf(childActionToNewPosition);
-        console.log("old position: ", oldPosition);
-        console.log("new position: ", newPosition);
 
         if (oldPosition < newPosition) {
             newPosition -= 1;
@@ -36,15 +29,12 @@ class Home extends Component {
 
         // slice left around index
         let leftArr = this.props.child_actions.slice(0, oldPosition);
-        console.log("left slice: ", leftArr);
 
         // slice right around index
         let rightArr = this.props.child_actions.slice(oldPosition + 1, this.props.child_actions.length);
-        console.log("right slice: ", leftArr);
 
         // concatenate left and right
         let newArray = [].concat(leftArr, rightArr);
-        console.log("complete array: ", newArray);
 
         // splice to insert
         newArray.splice(newPosition, 0, childActionToNewPosition);

@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   name: String,
   email: String,
   picture: String,
+  master_action: { type: String, ref: "Action" },
   role: { type: String, default: "guest", enum: roles },
 }, {
   timestamps: true,

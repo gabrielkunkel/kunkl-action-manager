@@ -5,9 +5,9 @@ const Schema = new mongoose.Schema({
   user: { type: String, ref: "User", required: true },
   text: String,
   complete: { type: Boolean, default: false },
-  parent_actions: [{ type: String, ref: "Action"}],
-  child_actions: [{ type: String, ref: "Action"}],
-  twin_actions:[{ type: String, ref: "Action"}]
+  parent_actions: [{ type: String, ref: "Action", default: [] }],
+  child_actions: [{ type: String, ref: "Action", default: [] }],
+  twin_actions:[{ type: String, ref: "Action", default: [] }]
 }, {
   timestamps: true,
 })
