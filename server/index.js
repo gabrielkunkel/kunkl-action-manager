@@ -6,6 +6,7 @@ const logger = require("morgan");
 import secret from './config/secret'
 import config from './config'
 import cors from 'cors'
+import {checkJwt} from './auth'
 
 const API_PORT = config.port;
 const app = express();
@@ -15,6 +16,7 @@ mongoose.connect(secret.dbUri);
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
+// app.use(checkJwt);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));

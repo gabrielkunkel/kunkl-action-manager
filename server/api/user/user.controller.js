@@ -5,23 +5,27 @@ const uuidv4 = require('uuid/v4');
 export function add_edit_user(req, res) {
 
     User.findOneAndUpdate({ _id: req.body._id }, req.body, { upsert: true, new: true, useFindAndModify: false })
-        .populate("Action")
         .exec(function(err, user_doc) {
             if (err) return res.send(500, { error: err });
-
+            
             if(!user_doc.master_action) {
-
                 Action.create({
                     _id: uuidv4(),
                     user: user_doc._id,
                     text: 'Master',
                 }, function (err, action_doc) {
+       
                     if (err) return res.send(500, { error: err });
+                    console.log("here is the action_doc: ", action_doc);
 
-                    // update user with master_action
+                    User.where({ _id: user_doc._id}).update({ master_action: action_doc._id}); // this is not working
 
-                    user_doc.master_action = action_doc;
-                    res.send(user_doc);
+                    User.findById(user_doc._id)
+                        .exec(function(err, user_doc_update) {
+                            if (err) return res.send(500, {error: err});
+                            console.log(user_doc_update);
+                            res.send(user_doc_update);
+                        });
                 });
               
             }

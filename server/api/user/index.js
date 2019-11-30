@@ -1,5 +1,6 @@
 import {Router, } from "express"
 import controller from "./user.controller"
+import {checkJwt} from '../../auth'
 
 let router = new Router()
 

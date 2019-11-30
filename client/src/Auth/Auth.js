@@ -21,24 +21,43 @@ export default class Auth {
     this.auth0.authorize();
   };
 
-  registerUpdateUser = () => {
-    this.getProfile((profile, error) => {
-        axios.post("http://localhost:3001" + config.apiRoutes.addUser, {
-            _id: profile.sub,
-            name: profile.name,
-            picture: profile.picture,
-            email: profile.email,
-            role: "user"
-        });
-    });
-}
+  registerUpdateUser = async () => {
 
-  handleAuthentication = () => {
+    try {
+
+      const token = await this.getAccessToken();
+
+      this.getProfile((profile, error) => {
+        axios.post("http://localhost:3001" + config.apiRoutes.addUser, {
+          _id: profile.sub,
+          name: profile.name,
+          picture: profile.picture,
+          email: profile.email,
+          role: "user"
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // 'Content-Type': 'application/json;charset=UTF-8',
+          }
+        }).then(response => {
+          console.log("received profile back: ", response.data);
+          this.history.push("/home");
+        }).catch(err => {
+          console.error(err);
+        });
+      });
+
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
+  handleAuthentication = async () => {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        this.history.push("/");
-        this.registerUpdateUser();
+        this.history.push("/home");
       } else if (err) {
         this.history.push("/");
         alert(`Error: ${err.error}. Check the console for further details.`);
@@ -85,6 +104,7 @@ export default class Auth {
 
   getProfile = cb => {
     if (this.userProfile) return cb(this.userProfile);
+
     this.auth0.client.userInfo(this.getAccessToken(), (err, profile) => {
       if (profile) this.userProfile = profile;
       cb(profile, err);

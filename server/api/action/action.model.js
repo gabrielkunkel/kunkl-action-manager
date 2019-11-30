@@ -12,4 +12,4 @@ const Schema = new mongoose.Schema({
   timestamps: true,
 })
 
-export default mongoose.model("Action", Schema)
+export default mongoose.model("Action", Schema);

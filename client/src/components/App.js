@@ -4,7 +4,9 @@ import Home from "../Containers/Home";
 import Profile from "./Profile";
 import { Nav } from "./Nav";
 import Auth from "../Auth/Auth"
+
 import Callback from "./Callback";
+import Hello from "../Containers/Hello";
 
 class App extends Component {
 
@@ -23,7 +25,8 @@ class App extends Component {
       <div>
        <Nav auth={this.auth} />
         <div className="body">
-          <Route path="/" exact render={props => <Home auth={this.auth} {...props} />} />
+          <Route path="/" exact render={props => <Hello auth={this.auth} {...props} />} />
+          <Route path="/home" exact render={props => <Home auth={this.auth} {...props} />} />
           <Route path="/profile" render={props =>
               this.auth.isAuthenticated() ? (
                 <Profile auth={this.auth} {...props} />

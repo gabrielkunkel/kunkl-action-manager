@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 
 import ActionList from '../Components/ActionList'
 import NewActionForm from '../Components/NewActionForm'
+import dbService from '../Services/db.service'
 
 class Home extends Component {
 
@@ -18,25 +19,40 @@ class Home extends Component {
         this.nestChildAction = this.nestChildAction.bind(this);
     }
 
+    componentDidMount() {
+
+        this.props.auth.auth0.client.userInfo(this.props.auth.getAccessToken(), (err, profile) => {
+            dbService
+            .getMasterAction(profile.sub)
+            .then((response) => {
+                let theData = response.data;
+                let newState = {
+                    parent_actions: theData.parent_actions,
+                    text: "Master",
+                    _id: theData._id,
+                    user: theData.user,
+                    twin_actions: theData.twin_actions,
+                    child_actions: theData.child_actions,
+                }
+
+                this.props.dispatch({ type: 'CHANGE_ACTIVE_ACTION', data: newState });
+            })
+        });
+
+      }
+
+
     insertUpdateChildActions(childActionToNewPosition, newPosition) {
 
-        // index of
         let oldPosition = this.props.child_actions.indexOf(childActionToNewPosition);
 
         if (oldPosition < newPosition) {
             newPosition -= 1;
         }
 
-        // slice left around index
         let leftArr = this.props.child_actions.slice(0, oldPosition);
-
-        // slice right around index
         let rightArr = this.props.child_actions.slice(oldPosition + 1, this.props.child_actions.length);
-
-        // concatenate left and right
         let newArray = [].concat(leftArr, rightArr);
-
-        // splice to insert
         newArray.splice(newPosition, 0, childActionToNewPosition);
 
         this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray});

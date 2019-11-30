@@ -12,10 +12,10 @@ export class Nav extends Component {
                 <nav>
                 <ul>
                     <li>
-                        <Link to="/">Home</Link>
+                        {isAuthenticated() ? <Link to="/home">Home</Link> : <div></div>}
                     </li>
                     <li>
-                        <Link to="/profile">Profile</Link>
+                        {isAuthenticated() ? <Link to="/profile">Profile</Link> : <div></div>}
                     </li>
                     <li>
                         <button onClick={isAuthenticated() ? logout : login}>

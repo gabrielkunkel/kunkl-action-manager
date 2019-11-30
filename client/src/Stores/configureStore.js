@@ -3,12 +3,13 @@ import {createLogger} from 'redux-logger'
 import thunk from 'redux-thunk'
 
 var defaultState = {
+    user: '',
     parent_actions: [],
     text: "",
+    _id: "",
     complete: false,
     twin_actions: [],
     child_actions: [],
-    active_action: {},
     form: ''
 };
 
