@@ -99,7 +99,7 @@ class Home extends Component {
                         return item._id !== actionToNest._id;
                     });
             
-                    this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray});
+                    this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray });
                 }
             });    
     }
@@ -142,6 +142,8 @@ class Home extends Component {
                 <DndProvider backend={HTML5Backend}>
 
                     {this.props.parent_actions ? <ParentList parent_actions={this.props.parent_actions} updateActiveAction={this.updateActiveAction}/> : <div></div>}
+
+                    <br />
 
                     <ActiveAction text={this.props.text} complete={this.props.complete} />
 

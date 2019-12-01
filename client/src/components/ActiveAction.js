@@ -11,7 +11,7 @@ export default class ActiveAction extends Component {
                 border: '3px',
                 width: '80%',
                 borderStyle: 'solid',
-                borderColor: "yellow",
+                borderColor: "red",
                 marginTop: '10px',
                 marginBottom: '10px',
                 padding: '5px'

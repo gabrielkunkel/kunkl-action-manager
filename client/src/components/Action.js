@@ -15,7 +15,10 @@ class Action extends Component {
                 fontWeight: 'bold',
                 cursor: 'move',
                 padding: '3px',
-                margin: '3px'
+                margin: '3px',
+                width: '80%',
+                borderStyle: 'solid',
+                borderColor: "green"
               }}> 
                 <div>{action.text}</div>
             </div>

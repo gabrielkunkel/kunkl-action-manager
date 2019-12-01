@@ -117,21 +117,13 @@ export function sort_update(req, res) {
     child_actions: req.body.newArray
   }, {
     useFindAndModify: false, new: true
-  }, function(err, doc) {
-    if (err) return res.send(500, {
-      error: err
+  })
+    .populate("child_actions")
+    .exec()
+    .then(result => {
+      res.send(result);
     });
 
-    Action.find({'_id': {$in: doc.child_actions }}, function(err, child_action_docs) {
-      if (err) return res.send(500, {
-        error: err
-      });
-      child_action_docs.sort((a, b) => doc.child_actions.indexOf(a) > doc.child_actions.indexOf(b) ? 1 : -1 )
-      doc.child_actions = child_action_docs;
-      res.send(doc);
-    });
-
-  });
 }
 
 export function get_action(req, res) {
