@@ -7,6 +7,8 @@ import dbService from '../Services/db.service'
 
 import ActionList from '../Components/ActionList'
 import NewActionForm from '../Components/NewActionForm'
+import ActiveAction from '../Components/ActiveAction'
+import ParentList from '../Components/ParentList'
 
 class Home extends Component {
 
@@ -132,15 +134,13 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Home</h1>
-                <NewActionForm 
-                    handleTaskSubmit={this.handleTaskSubmit} 
-                    handleFormChange={this.handleFormChange}
-                    formValue={this.props.form}
-                />
-                <br />
                 
                 <DndProvider backend={HTML5Backend}>
+
+                    {this.props.parent_actions ? <ParentList parent_actions={this.props.parent_actions} updateActiveAction={this.updateActiveAction}/> : <div></div>}
+
+                    <ActiveAction text={this.props.text} complete={this.props.complete} />
+
                     <ActionList 
                         child_actions={this.props.child_actions} 
                         insertUpdateChildActions={this.insertUpdateChildActions}
@@ -148,6 +148,12 @@ class Home extends Component {
                         updateActiveAction={this.updateActiveAction}
                     />
                 </DndProvider>
+
+                <NewActionForm 
+                    handleTaskSubmit={this.handleTaskSubmit} 
+                    handleFormChange={this.handleFormChange}
+                    formValue={this.props.form}
+                />
 
             </div>
         )
@@ -159,6 +165,9 @@ export default connect((state, props) => {
         child_actions: state.child_actions,
         form: state.form,
         user: state.user,
-        _id: state._id
+        _id: state._id,
+        text: state.text,
+        complete: state.complete,
+        parent_actions: state.parent_actions
     }
 })(Home);
