@@ -43,7 +43,7 @@ export function add_action(req, res) {
     });
 
     Action.findOneAndUpdate({
-      _id: doc.parent_actions[0]
+      _id: doc.parent_actions[req.body.parent_actions.length-1]
     }, {
       $push: {
         child_actions: doc._id

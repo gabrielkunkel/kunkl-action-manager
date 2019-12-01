@@ -107,12 +107,16 @@ class Home extends Component {
     handleTaskSubmit(event) {
         event.preventDefault();
 
+        let parentActionsIds = this.props.parent_actions.map(item => {
+            return item._id;
+        });
+
         let action = {
             _id: generateUUID(),
             user: this.props.user,
             text: this.props.form,
             complete: false,
-            parent_actions: [this.props._id],
+            parent_actions: [...parentActionsIds, this.props._id],
             child_actions: [],
             twin_actions: []
         };
