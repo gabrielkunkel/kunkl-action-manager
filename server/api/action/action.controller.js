@@ -3,18 +3,25 @@ const uuidv4 = require('uuid/v4');
 
 export function get_master_action(req, res) {
 
-  Action.findOne({ user: req.query._id, text: 'Master' }, function (err, doc) {
-    if (err) return res.send(500, { error: err });
-    
+  Action.findOne({
+    user: req.query._id,
+    text: 'Master'
+  }, function (err, doc) {
+    if (err) return res.send(500, {
+      error: err
+    });
+
     console.log('if there is a doc, it is: ', doc);
 
-    if(!doc) {
-        Action.create({
-          _id: uuidv4(),
-          user: req.query._id,
-          text: 'Master',
+    if (!doc) {
+      Action.create({
+        _id: uuidv4(),
+        user: req.query._id,
+        text: 'Master',
       }, function (err, action_doc) {
-        if (err) return res.send(500, { error: err });
+        if (err) return res.send(500, {
+          error: err
+        });
         console.log("here is the new master action_doc: ", action_doc);
         res.send(action_doc);
       })
@@ -26,22 +33,45 @@ export function get_master_action(req, res) {
 
 }
 
-export function add_one_or_update(req, res) {
- 
-  Action.findOneAndUpdate({ _id: req.action._id }, req.action, { upsert: true, new: true }, function(err, doc) {
-    if (err) return res.send(500, { error: err });
+export function add_action(req, res) {
+
+  Action.create(req.body, function (err, doc) {
+    if (err) return res.send(500, {
+      error: err
+    });
+
+    console.log("doc id: ", doc._id)
+
+    Action.findOneAndUpdate({
+      _id: doc.parent_actions[0]
+    }, {
+      $push: {
+        child_actions: doc._id
+      }
+    }, {
+      useFindAndModify: false, new: true
+    }, function(err, master_doc) {
+      if (err) return res.send(500, {
+        error: err
+      });
+    });
+
 
     return res.send(doc);
-})
-  
+  })
+
 }
 
 export function get_all_of_user(req, res) {
 
-  Action.find({ user: req.action.user }, function(err, doc) {
-    if (err) return res.send(500, { error: err });
+  Action.find({
+    user: req.action.user
+  }, function (err, doc) {
+    if (err) return res.send(500, {
+      error: err
+    });
 
-    
+
 
     return res.send(doc);
   })
@@ -50,8 +80,10 @@ export function get_all_of_user(req, res) {
 
 export function get_one(req, res) {
 
-  Action.findById(req.action._id, function(err, doc) {
-    if (err) return res.send(500, { error: err });
+  Action.findById(req.action._id, function (err, doc) {
+    if (err) return res.send(500, {
+      error: err
+    });
 
     return res.send(doc);
   })
@@ -60,7 +92,7 @@ export function get_one(req, res) {
 
 export default {
   get_master_action,
-  add_one_or_update,
+  add_action,
   get_all_of_user,
   get_one
 

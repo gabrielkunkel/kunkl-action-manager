@@ -3,10 +3,10 @@ import {connect} from 'react-redux'
 import { generateUUID } from '../Services/uuid.service'
 import { DndProvider} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import dbService from '../Services/db.service'
 
 import ActionList from '../Components/ActionList'
 import NewActionForm from '../Components/NewActionForm'
-import dbService from '../Services/db.service'
 
 class Home extends Component {
 
@@ -82,17 +82,23 @@ class Home extends Component {
 
         let action = {
             _id: generateUUID(),
-            user: "test_id", // this.props.auth.userProfile.sub,
+            user: this.props.user,
             text: this.props.form,
             complete: false,
-            parent_actions: [],
+            parent_actions: [this.props._id], // will there be any problem with this?
             child_actions: [],
             twin_actions: []
         };
 
-        this.props.dispatch({type: 'ADD_ACTION', data: action });
-        this.props.dispatch({type: 'UPDATE_ACTION_ADD_FORM', data: '' });
-        event.target.reset();
+        dbService
+            .addAction(action)
+            .then((response) => {
+                this.props.dispatch({type: 'ADD_ACTION', data: response.data });
+                this.props.dispatch({type: 'UPDATE_ACTION_ADD_FORM', data: '' });
+                // event.target.reset();
+            });
+
+        
     }
 
     handleFormChange(event) {
@@ -125,6 +131,8 @@ class Home extends Component {
 export default connect((state, props) => {
     return {
         child_actions: state.child_actions,
-        form: state.form
+        form: state.form,
+        user: state.user,
+        _id: state._id
     }
 })(Home);
