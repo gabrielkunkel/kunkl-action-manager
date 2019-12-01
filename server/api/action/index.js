@@ -7,5 +7,6 @@ router.get("/getmaster", controller.get_master_action)
 router.post("/addaction", controller.add_action)
 router.post("/nestaction", controller.nest_child_action)
 router.post("/sortupdate", controller.sort_update)
+router.get("/getaction", controller.get_action)
 
 module.exports = router

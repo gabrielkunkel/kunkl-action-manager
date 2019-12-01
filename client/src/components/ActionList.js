@@ -6,7 +6,7 @@ export default class ActionList extends Component {
 
     render() {
 
-        var {child_actions, insertUpdateChildActions, nestChildAction} = this.props;
+        var {child_actions, insertUpdateChildActions, nestChildAction, updateActiveAction} = this.props;
 
         return (
             <div>
@@ -17,6 +17,7 @@ export default class ActionList extends Component {
                                                         position={index+1} 
                                                         insertUpdateChildActions={insertUpdateChildActions} 
                                                         nestChildAction={nestChildAction}
+                                                        updateActiveAction={updateActiveAction}
                                                         />)}
             </div>
         )

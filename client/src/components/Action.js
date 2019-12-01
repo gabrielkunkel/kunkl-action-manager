@@ -5,16 +5,11 @@ import { DropTarget } from 'react-dnd';
 
 class Action extends Component {
 
-
-    // componentDidMount() {
-    //     console.log("action component props", this.props)
-    // };
-
     render() {
-        var {collectedProps, drag, action, connectDropTarget} = this.props;
+        var {collectedProps, drag, action, connectDropTarget, updateActiveAction} = this.props;
 
         return connectDropTarget(
-            <div ref={drag} style={{
+            <div ref={drag} onDoubleClick={() => updateActiveAction(action._id)} style={{
                 opacity: collectedProps.isDragging ? 0 : 1,
                 fontSize: 25,
                 fontWeight: 'bold',

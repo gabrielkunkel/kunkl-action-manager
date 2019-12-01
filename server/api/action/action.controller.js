@@ -134,10 +134,24 @@ export function sort_update(req, res) {
   });
 }
 
+export function get_action(req, res) {
+
+  Action.findOne({ _id: req.query._id})
+    .populate("child_actions")
+    .populate("parent_actions")
+    .populate("twin_actions")
+    .exec()
+    .then(result => {
+      res.send(result);
+    });
+
+}
+
 
 export default {
   get_master_action,
   add_action,
   nest_child_action,
-  sort_update
+  sort_update,
+  get_action
 }

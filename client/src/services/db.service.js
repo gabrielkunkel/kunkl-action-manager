@@ -42,10 +42,20 @@ async function insertUpdateChildActions(actionToUpdateId, newArrayToUpdate) {
 
 }
 
+async function getAction(actionId) {
+    
+    try {
+        return await axios.get("http://localhost:3001/actions/getaction?_id=" + actionId);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 export default {
     getMasterAction,
     addAction,
     nestChildAction,
-    insertUpdateChildActions
+    insertUpdateChildActions,
+    getAction
 }

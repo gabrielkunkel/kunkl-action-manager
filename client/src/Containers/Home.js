@@ -17,6 +17,7 @@ class Home extends Component {
         this.handleFormChange = this.handleFormChange.bind(this);
         this.insertUpdateChildActions = this.insertUpdateChildActions.bind(this);
         this.nestChildAction = this.nestChildAction.bind(this);
+        this.updateActiveAction = this.updateActiveAction.bind(this);
     }
 
     componentDidMount() {
@@ -41,6 +42,26 @@ class Home extends Component {
 
       }
 
+    updateActiveAction(actionId) {
+        dbService
+            .getAction(actionId)
+            .then(response => {
+                console.log("response should be made: ", response.data);
+
+                let theData = response.data;
+                let newState = {
+                    parent_actions: theData.parent_actions,
+                    text: theData.text,
+                    _id: theData._id,
+                    user: theData.user,
+                    twin_actions: theData.twin_actions,
+                    child_actions: theData.child_actions,
+                }
+
+                this.props.dispatch({ type: 'CHANGE_ACTIVE_ACTION', data: newState });
+
+            });
+    }
 
     insertUpdateChildActions(childActionToNewPosition, newPosition) {
 
@@ -124,6 +145,7 @@ class Home extends Component {
                         child_actions={this.props.child_actions} 
                         insertUpdateChildActions={this.insertUpdateChildActions}
                         nestChildAction={this.nestChildAction}
+                        updateActiveAction={this.updateActiveAction}
                     />
                 </DndProvider>
 
