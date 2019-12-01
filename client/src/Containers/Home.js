@@ -88,7 +88,8 @@ class Home extends Component {
 
     nestChildAction(actionToNest, newParentAction) {
 
-        // todo: include parent actions in what is checked and updated for "dots"
+        if(actionToNest._id !== newParentAction._id) {
+
         let position = this.props.child_actions.indexOf(newParentAction);
         let newArray = [...this.props.child_actions];
         newArray[position].child_actions.push(actionToNest._id);
@@ -102,7 +103,9 @@ class Home extends Component {
             
                     this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray });
                 }
-            });    
+            });
+        }
+    
     }
 
     nestChildUpParentList(actionToNest, newParentAction) {
