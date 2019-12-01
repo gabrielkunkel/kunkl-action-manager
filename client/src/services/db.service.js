@@ -22,10 +22,19 @@ async function addAction(action) {
 
 async function nestChildAction(newChildActionId, newParentActionId, oldParentActionId) {
 
-    console.log("the values from client: ", newChildActionId, "   ", newParentActionId, "   ", oldParentActionId);
-
     try {
         return await axios.post("http://localhost:3001/actions/nestaction?newchild=" + newChildActionId + "&newparent=" + newParentActionId + "&oldparent=" + oldParentActionId);
+
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+async function insertUpdateChildActions(actionToUpdateId, newArrayToUpdate) {
+
+    try {
+        return await axios.post("http://localhost:3001/actions/sortupdate?action=" + actionToUpdateId, {newArray: newArrayToUpdate});
 
     } catch (error) {
         console.error(error);
@@ -37,5 +46,6 @@ async function nestChildAction(newChildActionId, newParentActionId, oldParentAct
 export default {
     getMasterAction,
     addAction,
-    nestChildAction
+    nestChildAction,
+    insertUpdateChildActions
 }

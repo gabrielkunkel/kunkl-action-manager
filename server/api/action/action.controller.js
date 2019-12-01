@@ -109,9 +109,35 @@ export function nest_child_action (req, res) {
 
 }
 
+export function sort_update(req, res) {
+
+  Action.findOneAndUpdate({
+    _id: req.query.action
+  }, {
+    child_actions: req.body.newArray
+  }, {
+    useFindAndModify: false, new: true
+  }, function(err, doc) {
+    if (err) return res.send(500, {
+      error: err
+    });
+
+    Action.find({'_id': {$in: doc.child_actions }}, function(err, child_action_docs) {
+      if (err) return res.send(500, {
+        error: err
+      });
+      child_action_docs.sort((a, b) => doc.child_actions.indexOf(a) > doc.child_actions.indexOf(b) ? 1 : -1 )
+      doc.child_actions = child_action_docs;
+      res.send(doc);
+    });
+
+  });
+}
+
 
 export default {
   get_master_action,
   add_action,
-  nest_child_action
+  nest_child_action,
+  sort_update
 }

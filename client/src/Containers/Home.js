@@ -55,19 +55,19 @@ class Home extends Component {
         let newArray = [].concat(leftArr, rightArr);
         newArray.splice(newPosition, 0, childActionToNewPosition);
 
-        this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray});
-
+        dbService
+            .insertUpdateChildActions(this.props._id, newArray)
+            .then(response => {
+                this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: response.data.child_actions });
+            });
     }
 
     nestChildAction(actionToNest, newParentAction) {
 
-        // update the newParentAction
         let position = this.props.child_actions.indexOf(newParentAction);
         let newArray = [...this.props.child_actions];
         newArray[position].child_actions.push(actionToNest._id);
 
-        // todo: add async call to update that actions child_actions on db
-        // insert update newParentAction post here
         dbService.nestChildAction(actionToNest._id, newParentAction._id, this.props._id)
             .then(response => {
                 if(response.data.db_success) {
