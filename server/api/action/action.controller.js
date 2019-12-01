@@ -11,8 +11,6 @@ export function get_master_action(req, res) {
       error: err
     });
 
-    console.log('if there is a doc, it is: ', doc);
-
     if (!doc) {
       Action.create({
         _id: uuidv4(),
@@ -27,7 +25,11 @@ export function get_master_action(req, res) {
       })
 
     } else {
-      return res.send(doc);
+      Action.find({'_id': {$in: doc.child_actions }}, function (err, child_action_docs) {
+        
+        doc.child_actions = child_action_docs;
+        return res.send(doc);
+      });
     }
   })
 
@@ -39,8 +41,6 @@ export function add_action(req, res) {
     if (err) return res.send(500, {
       error: err
     });
-
-    console.log("doc id: ", doc._id)
 
     Action.findOneAndUpdate({
       _id: doc.parent_actions[0]

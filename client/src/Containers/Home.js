@@ -85,7 +85,7 @@ class Home extends Component {
             user: this.props.user,
             text: this.props.form,
             complete: false,
-            parent_actions: [this.props._id], // will there be any problem with this?
+            parent_actions: [this.props._id],
             child_actions: [],
             twin_actions: []
         };
@@ -95,7 +95,6 @@ class Home extends Component {
             .then((response) => {
                 this.props.dispatch({type: 'ADD_ACTION', data: response.data });
                 this.props.dispatch({type: 'UPDATE_ACTION_ADD_FORM', data: '' });
-                // event.target.reset();
             });
 
         
@@ -112,6 +111,7 @@ class Home extends Component {
                 <NewActionForm 
                     handleTaskSubmit={this.handleTaskSubmit} 
                     handleFormChange={this.handleFormChange}
+                    formValue={this.props.form}
                 />
                 <br />
                 
