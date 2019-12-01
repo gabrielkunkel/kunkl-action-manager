@@ -20,6 +20,7 @@ class Home extends Component {
         this.insertUpdateChildActions = this.insertUpdateChildActions.bind(this);
         this.nestChildAction = this.nestChildAction.bind(this);
         this.updateActiveAction = this.updateActiveAction.bind(this);
+        this.nestChildUpParentList = this.nestChildUpParentList.bind(this);
     }
 
     componentDidMount() {
@@ -87,6 +88,7 @@ class Home extends Component {
 
     nestChildAction(actionToNest, newParentAction) {
 
+        // todo: include parent actions in what is checked and updated for "dots"
         let position = this.props.child_actions.indexOf(newParentAction);
         let newArray = [...this.props.child_actions];
         newArray[position].child_actions.push(actionToNest._id);
@@ -94,11 +96,24 @@ class Home extends Component {
         dbService.nestChildAction(actionToNest._id, newParentAction._id, this.props._id)
             .then(response => {
                 if(response.data.db_success) {
-                    console.log("update should have occured.");
                     newArray = newArray.filter(item => {
                         return item._id !== actionToNest._id;
                     });
             
+                    this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray });
+                }
+            });    
+    }
+
+    nestChildUpParentList(actionToNest, newParentAction) {
+
+        dbService.nestChildUpParentList(actionToNest._id, newParentAction._id, this.props._id)
+            .then(response => {
+                if(response.data.db_success) {
+                    let newArray = this.props.child_actions.filter(item => {
+                        return item._id !== actionToNest._id;
+                    });
+                    
                     this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray });
                 }
             });    
@@ -141,7 +156,11 @@ class Home extends Component {
                 
                 <DndProvider backend={HTML5Backend}>
 
-                    {this.props.parent_actions ? <ParentList parent_actions={this.props.parent_actions} updateActiveAction={this.updateActiveAction}/> : <div></div>}
+                    {this.props.parent_actions ? <ParentList 
+                        parent_actions={this.props.parent_actions} 
+                        updateActiveAction={this.updateActiveAction}
+                        nestChildUpParentList={this.nestChildUpParentList}
+                        /> : <div></div>}
 
                     <br />
 

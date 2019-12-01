@@ -52,10 +52,22 @@ async function getAction(actionId) {
     }
 }
 
+async function nestChildUpParentList(newChildActionId, newParentActionId, oldParentActionId) {
+
+    try {
+        return await axios.post("http://localhost:3001/actions/nestchildupparentlist?newchild=" + newChildActionId + "&newparent=" + newParentActionId + "&oldparent=" + oldParentActionId);
+
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
 export default {
     getMasterAction,
     addAction,
     nestChildAction,
     insertUpdateChildActions,
-    getAction
+    getAction,
+    nestChildUpParentList
 }

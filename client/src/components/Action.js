@@ -42,7 +42,7 @@ Action = withDragHOC(specObjReturned, Action);
 Action = DropTarget(config.ItemTypes.CHILD_ACTION, {
     drop: (props, monitor) => {
         const item = monitor.getItem();
-        props.nestChildAction(item.action, props.action);
+        props.nestChildAction(item.action, props.parent);
     }
 }, connect => ({ connectDropTarget: connect.dropTarget() }))(Action);
 

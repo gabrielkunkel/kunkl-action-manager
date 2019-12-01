@@ -83,7 +83,7 @@ export function nest_child_action (req, res) {
     useFindAndModify: false, new: true
   }).exec();
 
-  let updateOldParent = Action.findOneAndUpdate({ // not working
+  let updateOldParent = Action.findOneAndUpdate({
     _id: req.query.oldparent
   }, {
     $pull: {
@@ -140,10 +140,75 @@ export function get_action(req, res) {
 }
 
 
+export function nest_child_up_parent_list (req, res) {
+
+  let newChildParentsToRemovePromise = Action.findById(req.query.newchild).exec()
+  newChildParentsToRemovePromise.then(action => {
+
+    let newparents = [];
+
+    for (let i = 0; i < action.parent_actions.length; i += 1) {
+      if (action.parent_actions[i] === req.query.newparent) {
+        newparents.push(action.parent_actions[i]);
+        break;
+      } else {
+        newparents.push(action.parent_actions[i]);
+      }
+    }
+
+    console.log("new parents array is: ", newparents);
+    
+    let updateNewChild = Action.findOneAndUpdate({
+      _id: req.query.newchild
+    }, {
+        parent_actions: newparents
+    }, {
+      useFindAndModify: false, new: true
+    }).exec();
+  
+    let updateNewParent = Action.findOneAndUpdate({
+      _id: req.query.newparent
+    }, {
+      $push: {
+        child_actions: req.query.newchild
+      }
+    }, {
+      useFindAndModify: false, new: true
+    }).exec();
+  
+    let updateOldParent = Action.findOneAndUpdate({
+      _id: req.query.oldparent
+    }, {
+      $pull: {
+        child_actions: req.query.newchild
+      }
+    }, {
+      useFindAndModify: false, new: true
+    }).exec();
+    
+    Promise.all([updateNewChild, updateNewParent, updateOldParent])
+      .then( ([newChildUpdated, newParentUpdated, oldParentUpdated]) => {
+        if (
+          newChildUpdated.parent_actions.length === newparents.length &&
+          newParentUpdated.child_actions.includes(req.query.newchild) &&
+          !oldParentUpdated.child_actions.includes(req.query.newchild)
+        ) {
+          res.send({db_success: true });
+        }
+        else {
+          res.send({db_success: false});
+        }
+      });
+
+  });
+
+}
+
 export default {
   get_master_action,
   add_action,
   nest_child_action,
   sort_update,
-  get_action
+  get_action,
+  nest_child_up_parent_list
 }
