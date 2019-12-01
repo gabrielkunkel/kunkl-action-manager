@@ -13,7 +13,6 @@ class Action extends Component {
                 opacity: collectedProps.isDragging ? 0 : 1,
                 fontSize: 25,
                 fontWeight: 'bold',
-                cursor: 'move',
                 padding: '3px',
                 margin: '3px',
                 width: '80%',

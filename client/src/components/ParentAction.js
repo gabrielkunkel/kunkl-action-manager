@@ -7,13 +7,14 @@ export default class ParentAction extends Component {
 
         return (
             <div style={{
-                border: '3px',
                 width: '80%',
                 borderStyle: 'solid',
                 borderColor: "blue",
-                marginTop: '10px',
-                marginBottom: '10px',
-                padding: '5px'
+                padding: '3px',
+                margin: '3px',
+                fontSize: 25,
+                fontWeight: 'bold'
+
             }}>
                 <div onDoubleClick={() => updateActiveAction(parent._id)}>{parent.text}</div>
             </div>
