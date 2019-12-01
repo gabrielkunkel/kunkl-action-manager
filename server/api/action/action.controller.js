@@ -59,41 +59,59 @@ export function add_action(req, res) {
 
     return res.send(doc);
   })
-
 }
 
-export function get_all_of_user(req, res) {
+export function nest_child_action (req, res) {
 
-  Action.find({
-    user: req.action.user
-  }, function (err, doc) {
-    if (err) return res.send(500, {
-      error: err
+  let updateNewChild = Action.findOneAndUpdate({
+    _id: req.query.newchild
+  }, {
+    $push: {
+      parent_actions: req.query.newparent
+    }
+  }, {
+    useFindAndModify: false, new: true
+  }).exec();
+
+  let updateNewParent = Action.findOneAndUpdate({
+    _id: req.query.newparent
+  }, {
+    $push: {
+      child_actions: req.query.newchild
+    }
+  }, {
+    useFindAndModify: false, new: true
+  }).exec();
+
+  let updateOldParent = Action.findOneAndUpdate({ // not working
+    _id: req.query.oldparent
+  }, {
+    $pull: {
+      child_actions: req.query.newchild
+    }
+  }, {
+    useFindAndModify: false, new: true
+  }).exec();
+  
+  Promise.all([updateNewChild, updateNewParent, updateOldParent])
+    .then( ([newChildUpdated, newParentUpdated, oldParentUpdated]) => {
+      if (
+        newChildUpdated.parent_actions.includes(req.query.newparent) &&
+        newParentUpdated.child_actions.includes(req.query.newchild) &&
+        !oldParentUpdated.child_actions.includes(req.query.newchild)
+      ) {
+        res.send({db_success: true });
+      }
+      else {
+        res.send({db_success: false});
+      }
     });
 
-
-
-    return res.send(doc);
-  })
-
 }
 
-export function get_one(req, res) {
-
-  Action.findById(req.action._id, function (err, doc) {
-    if (err) return res.send(500, {
-      error: err
-    });
-
-    return res.send(doc);
-  })
-
-}
 
 export default {
   get_master_action,
   add_action,
-  get_all_of_user,
-  get_one
-
+  nest_child_action
 }

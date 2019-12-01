@@ -9,7 +9,6 @@ async function getMasterAction(user) {
     }
 }
 
-// todo: add new
 async function addAction(action) {
 
     try {
@@ -21,11 +20,22 @@ async function addAction(action) {
 
 }
 
+async function nestChildAction(newChildActionId, newParentActionId, oldParentActionId) {
 
-// todo: make to child
+    console.log("the values from client: ", newChildActionId, "   ", newParentActionId, "   ", oldParentActionId);
+
+    try {
+        return await axios.post("http://localhost:3001/actions/nestaction?newchild=" + newChildActionId + "&newparent=" + newParentActionId + "&oldparent=" + oldParentActionId);
+
+    } catch (error) {
+        console.error(error);
+    }
+
+}
 
 
 export default {
     getMasterAction,
-    addAction
+    addAction,
+    nestChildAction
 }

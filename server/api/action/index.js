@@ -5,5 +5,6 @@ let router = new Router()
 
 router.get("/getmaster", controller.get_master_action)
 router.post("/addaction", controller.add_action)
+router.post("/nestaction", controller.nest_child_action)
 
 module.exports = router

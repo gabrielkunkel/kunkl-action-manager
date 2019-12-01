@@ -68,13 +68,17 @@ class Home extends Component {
 
         // todo: add async call to update that actions child_actions on db
         // insert update newParentAction post here
-
-        // update the primary list to no longer have that action
-        newArray = newArray.filter(item => {
-            return item._id !== actionToNest._id;
-        });
-
-        this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray});
+        dbService.nestChildAction(actionToNest._id, newParentAction._id, this.props._id)
+            .then(response => {
+                if(response.data.db_success) {
+                    console.log("update should have occured.");
+                    newArray = newArray.filter(item => {
+                        return item._id !== actionToNest._id;
+                    });
+            
+                    this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray});
+                }
+            });    
     }
 
     handleTaskSubmit(event) {
