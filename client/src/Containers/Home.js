@@ -155,17 +155,32 @@ class Home extends Component {
         this.props.dispatch({type: 'UPDATE_ACTION_ADD_FORM', data: event.target.value });
     }
 
-    toggleActionCompletion(action) {
+    toggleActionCompletion(action, event) {
 
+        // console.log("this.props.child_actions is: ", this.props.child_actions);
+
+        // console.log("Is the event checked?", event.target.checked);
         let childActionLocation = this.props.child_actions.indexOf(action);
-        let toggledCheckMark = !this.props.child_actions[childActionLocation].complete;
-        let newArray = [this.props.child_actions];
+        let toggledCheckMark = event.target.checked;
+        let newArray = [...this.props.child_actions];
+
+        // console.log("newArray is now: ", newArray);
+        // console.log("newArray[childActionLocation].complete is: ", newArray[childActionLocation].complete);
+    
 
         dbService
             .toggleActionCompletion(action._id, { complete: toggledCheckMark })
             .then(response => {
-                newArray = response.data.child_actions;
-                this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray });
+                if(response.data.db_success) {
+                    newArray[childActionLocation].complete = toggledCheckMark;
+                    // console.log("newArray[childActionLocation].complete after db is: ", newArray[childActionLocation].complete);
+
+                    // console.log("newArray is now: ", newArray);
+
+                    this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray });
+                } else {
+                    console.log("something went wrong with the action update.");
+                }
             });
     }
 

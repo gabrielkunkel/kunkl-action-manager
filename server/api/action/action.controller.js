@@ -204,6 +204,8 @@ export function nest_child_up_parent_list (req, res) {
 
 export function toggle_action_completion(req, res) {
 
+  console.log("req.query.action to update: ", req.query.action);
+
   Action.findOneAndUpdate({
     _id: req.query.action
   }, {
@@ -211,11 +213,16 @@ export function toggle_action_completion(req, res) {
   }, {
     useFindAndModify: false, new: true
   })
-    .populate("child_actions")
     .exec()
     .then(result => {
+      if(result._id === req.query.action && req.body.complete === result.complete) {
+        res.send({db_success: true });
+      } else {
+        res.send({db_success: false});
+      }
 
-      res.send(result);
+      console.log("is populate working?", result);
+      console.log("is this the same item? ...", result._id);
     });
 
 

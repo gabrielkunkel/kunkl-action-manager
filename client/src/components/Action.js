@@ -6,6 +6,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 class Action extends Component {
 
+
+
     render() {
         var {collectedProps, drag, action, connectDropTarget, updateActiveAction, toggleActionCompletion} = this.props;
 
@@ -22,10 +24,11 @@ class Action extends Component {
                 cursor: 'grab'
               }}> 
                 <div><Checkbox
-                    checked={action.complete}
-                    value={action._id}
+                    defaultChecked={action.complete}
                     color="primary"
-                    onChange={() => toggleActionCompletion(action)}
+                    onChange={(event) => {
+                        return toggleActionCompletion(action, event) 
+                    }}
                     inputProps={{
                         'aria-label': 'primary checkbox',
                     }}
