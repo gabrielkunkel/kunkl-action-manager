@@ -12,10 +12,10 @@ class SortDropZone extends Component {
 
         return (
             <div ref={drop} style={{
-                width: '90%',
-                height: '15px',
-                marginTop: '-7px',
-                marginBottom: '-7px'
+                width: '100%',
+                height: '10px',
+                marginTop: '5px',
+                marginBottom: '5px'
               }}>
                 {collectedProps.isOver && collectedProps.canDrop && <DropBar />}
             </div>

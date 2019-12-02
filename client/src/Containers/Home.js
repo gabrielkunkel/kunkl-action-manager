@@ -156,6 +156,7 @@ class Home extends Component {
     }
 
     toggleActionCompletion(action, event) {
+        // todo: control checkbox state with redux
 
         // console.log("this.props.child_actions is: ", this.props.child_actions);
 

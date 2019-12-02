@@ -6,10 +6,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 class Action extends Component {
 
-
+    
 
     render() {
-        var {collectedProps, drag, action, connectDropTarget, updateActiveAction, toggleActionCompletion} = this.props;
+        var {collectedProps, isOver, canDrop, drag, action, connectDropTarget, updateActiveAction, toggleActionCompletion} = this.props;
+
+        console.log(this.props);
 
         return connectDropTarget(
             <div ref={drag} onDoubleClick={() => updateActiveAction(action._id)} style={{
@@ -17,9 +19,9 @@ class Action extends Component {
                 fontSize: 25,
                 fontWeight: 'bold',
                 padding: '3px',
-                margin: '3px',
+                margin: '0px',
                 width: '80%',
-                borderStyle: 'solid',
+                borderStyle: isOver && canDrop ? 'dotted' : 'solid',
                 borderColor: "green",
                 cursor: 'grab'
               }}> 
@@ -57,6 +59,10 @@ Action = DropTarget(config.ItemTypes.CHILD_ACTION, {
         const item = monitor.getItem();
         props.nestChildAction(item.action, props.action);
     }
-}, connect => ({ connectDropTarget: connect.dropTarget() }))(Action);
+}, (connect, monitor) => ({ 
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop()
+}))(Action);
 
 export default Action;

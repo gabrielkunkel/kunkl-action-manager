@@ -5,12 +5,12 @@ import { DropTarget } from 'react-dnd'
 class ParentAction extends Component {
     render() {
 
-        var {parent, updateActiveAction, connectDropTarget} = this.props;
+        var {parent, isOver, canDrop, updateActiveAction, connectDropTarget} = this.props;
 
         return connectDropTarget(
             <div style={{
                 width: '80%',
-                borderStyle: 'solid',
+                borderStyle: isOver && canDrop ? 'dotted' : 'solid',
                 borderColor: "blue",
                 padding: '3px',
                 margin: '3px',
@@ -30,6 +30,9 @@ ParentAction = DropTarget(config.ItemTypes.CHILD_ACTION, {
         const item = monitor.getItem();
         props.nestChildUpParentList(item.action, props.parent);
     }
-}, connect => ({ connectDropTarget: connect.dropTarget() }))(ParentAction);
+}, (connect, monitor) => ({ 
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop()}))(ParentAction);
 
 export default ParentAction;
