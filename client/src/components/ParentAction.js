@@ -16,8 +16,8 @@ class ParentAction extends Component {
                 margin: '3px',
                 fontSize: 25,
                 fontWeight: 'bold',
-                textAlign: 'center'
-
+                textAlign: 'center', 
+                cursor: 'default'
             }}>
                 <div onDoubleClick={() => updateActiveAction(parent._id)}>{parent.text}</div>
             </div>

@@ -18,12 +18,13 @@ class Action extends Component {
                 margin: '3px',
                 width: '80%',
                 borderStyle: 'solid',
-                borderColor: "green"
+                borderColor: "green",
+                cursor: 'grab'
               }}> 
                 <div><Checkbox
                     checked={action.complete}
                     value={action._id}
-                    color="secondary"
+                    color="primary"
                     onChange={() => toggleActionCompletion(action)}
                     inputProps={{
                         'aria-label': 'primary checkbox',

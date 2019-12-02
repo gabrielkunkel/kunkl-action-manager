@@ -4,6 +4,7 @@ import { generateUUID } from '../Services/uuid.service'
 import { DndProvider} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import dbService from '../Services/db.service'
+import Container from '@material-ui/core/Container';
 
 import ActionList from '../Components/ActionList'
 import NewActionForm from '../Components/NewActionForm'
@@ -163,9 +164,7 @@ class Home extends Component {
         dbService
             .toggleActionCompletion(action._id, { complete: toggledCheckMark })
             .then(response => {
-    
                 newArray = response.data.child_actions;
-
                 this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray });
             });
     }
@@ -173,6 +172,7 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <Container maxWidth="sm">
                 
                 <DndProvider backend={HTML5Backend}>
 
@@ -201,6 +201,7 @@ class Home extends Component {
                     formValue={this.props.form}
                 />
 
+                </Container>
             </div>
         )
     }

@@ -16,7 +16,8 @@ export default class ActiveAction extends Component {
                 padding: '3px',
                 fontWeight: 'bold',
                 fontSize: 25,
-                textAlign: 'center'
+                textAlign: 'center',
+                cursor: 'default'
             }}>
                 {text}
             </div>
