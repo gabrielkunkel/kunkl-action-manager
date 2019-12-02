@@ -5,11 +5,11 @@ import SortDropZone from "./SortDropZone";
 export default class DndDuo extends Component {
     render() {
 
-        var {action, position, insertUpdateChildActions, nestChildAction, updateActiveAction} = this.props
+        var {action, position, insertUpdateChildActions, nestChildAction, updateActiveAction, toggleActionCompletion} = this.props
 
         return (
             <div>
-                <Action action={action} nestChildAction={nestChildAction} updateActiveAction={updateActiveAction} />
+                <Action action={action} toggleActionCompletion={toggleActionCompletion} nestChildAction={nestChildAction} updateActiveAction={updateActiveAction} />
                 <SortDropZone position={position} insertUpdateChildActions={insertUpdateChildActions} />
             </div>
         )

@@ -155,8 +155,6 @@ export function nest_child_up_parent_list (req, res) {
         newparents.push(action.parent_actions[i]);
       }
     }
-
-    console.log("new parents array is: ", newparents);
     
     let updateNewChild = Action.findOneAndUpdate({
       _id: req.query.newchild
@@ -204,11 +202,31 @@ export function nest_child_up_parent_list (req, res) {
 
 }
 
+export function toggle_action_completion(req, res) {
+
+  Action.findOneAndUpdate({
+    _id: req.query.action
+  }, {
+    complete: req.body.complete
+  }, {
+    useFindAndModify: false, new: true
+  })
+    .populate("child_actions")
+    .exec()
+    .then(result => {
+
+      res.send(result);
+    });
+
+
+}
+
 export default {
   get_master_action,
   add_action,
   nest_child_action,
   sort_update,
   get_action,
-  nest_child_up_parent_list
+  nest_child_up_parent_list,
+  toggle_action_completion
 }

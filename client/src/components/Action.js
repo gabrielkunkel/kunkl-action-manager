@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import withDragHOC from '../Hooks/withDragHOC'
 import config from '../Config'
 import { DropTarget } from 'react-dnd';
+import Checkbox from '@material-ui/core/Checkbox';
 
 class Action extends Component {
 
     render() {
-        var {collectedProps, drag, action, connectDropTarget, updateActiveAction} = this.props;
+        var {collectedProps, drag, action, connectDropTarget, updateActiveAction, toggleActionCompletion} = this.props;
 
         return connectDropTarget(
             <div ref={drag} onDoubleClick={() => updateActiveAction(action._id)} style={{
@@ -19,7 +20,15 @@ class Action extends Component {
                 borderStyle: 'solid',
                 borderColor: "green"
               }}> 
-                <div>{action.text}</div>
+                <div><Checkbox
+                    checked={action.complete}
+                    value={action._id}
+                    color="secondary"
+                    onChange={() => toggleActionCompletion(action)}
+                    inputProps={{
+                        'aria-label': 'primary checkbox',
+                    }}
+                />{action.text}</div>
             </div>
         )
     }

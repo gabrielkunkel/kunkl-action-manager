@@ -21,6 +21,7 @@ class Home extends Component {
         this.nestChildAction = this.nestChildAction.bind(this);
         this.updateActiveAction = this.updateActiveAction.bind(this);
         this.nestChildUpParentList = this.nestChildUpParentList.bind(this);
+        this.toggleActionCompletion = this.toggleActionCompletion.bind(this);
     }
 
     componentDidMount() {
@@ -153,6 +154,22 @@ class Home extends Component {
         this.props.dispatch({type: 'UPDATE_ACTION_ADD_FORM', data: event.target.value });
     }
 
+    toggleActionCompletion(action) {
+
+        let childActionLocation = this.props.child_actions.indexOf(action);
+        let toggledCheckMark = !this.props.child_actions[childActionLocation].complete;
+        let newArray = [this.props.child_actions];
+
+        dbService
+            .toggleActionCompletion(action._id, { complete: toggledCheckMark })
+            .then(response => {
+    
+                newArray = response.data.child_actions;
+
+                this.props.dispatch({type: 'REPLACE_CHILD_ACTIONS', data: newArray });
+            });
+    }
+
     render() {
         return (
             <div>
@@ -174,6 +191,7 @@ class Home extends Component {
                         insertUpdateChildActions={this.insertUpdateChildActions}
                         nestChildAction={this.nestChildAction}
                         updateActiveAction={this.updateActiveAction}
+                        toggleActionCompletion={this.toggleActionCompletion}
                     />
                 </DndProvider>
 

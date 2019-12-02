@@ -6,18 +6,19 @@ export default class ActionList extends Component {
 
     render() {
 
-        var {child_actions, insertUpdateChildActions, nestChildAction, updateActiveAction} = this.props;
+        var {child_actions, insertUpdateChildActions, nestChildAction, updateActiveAction, toggleActionCompletion} = this.props;
 
         return (
             <div>
-                <SortDropZone position={0} insertUpdateChildActions={insertUpdateChildActions} />
+                <SortDropZone position={0} key="anotherkey" insertUpdateChildActions={insertUpdateChildActions} />
                 {child_actions.map((action, index) => <DndDuo 
-                                                        key={action._id} 
+                                                        key={action._id}
                                                         action={action} 
                                                         position={index+1} 
                                                         insertUpdateChildActions={insertUpdateChildActions} 
                                                         nestChildAction={nestChildAction}
                                                         updateActiveAction={updateActiveAction}
+                                                        toggleActionCompletion={toggleActionCompletion}
                                                         />)}
             </div>
         )

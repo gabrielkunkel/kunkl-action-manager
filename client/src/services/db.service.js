@@ -63,11 +63,22 @@ async function nestChildUpParentList(newChildActionId, newParentActionId, oldPar
 
 }
 
+async function toggleActionCompletion(actionId, completionObj) {
+
+    try {
+        return await axios.post("http://localhost:3001/actions/toggleactioncompletion?action=" + actionId, completionObj);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export default {
     getMasterAction,
     addAction,
     nestChildAction,
     insertUpdateChildActions,
     getAction,
-    nestChildUpParentList
+    nestChildUpParentList,
+    toggleActionCompletion
 }
