@@ -20,7 +20,7 @@ class Action extends Component {
                 fontWeight: 'bold',
                 padding: '3px',
                 margin: '0px',
-                width: '80%',
+                // width: '80%',
                 borderStyle: isOver && canDrop ? 'dotted' : 'solid',
                 borderColor: "green",
                 cursor: 'grab'

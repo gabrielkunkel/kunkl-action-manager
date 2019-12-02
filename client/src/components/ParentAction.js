@@ -9,7 +9,6 @@ class ParentAction extends Component {
 
         return connectDropTarget(
             <div style={{
-                width: '80%',
                 borderStyle: isOver && canDrop ? 'dotted' : 'solid',
                 borderColor: "blue",
                 padding: '3px',

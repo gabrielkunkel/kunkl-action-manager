@@ -9,7 +9,6 @@ export default class DropBar extends Component {
                 // width: '100%',
                 // height: '4px'
               }}>
-                <ArrowRight fontSize="large" />
             </div>
         )
     }

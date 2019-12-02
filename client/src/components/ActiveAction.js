@@ -4,11 +4,10 @@ export default class ActiveAction extends Component {
     render() {
 
         // eslint-disable-next-line 
-        var {text, complete} = this.props;
+        var {text} = this.props;
 
         return (
             <div style={{
-                width: '80%',
                 borderStyle: 'solid',
                 borderColor: "red",
                 marginTop: '10px',

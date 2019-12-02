@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import withDropHOC from '../Hooks/withDropHOC'
 import config from '../Config'
 
-import DropBar from './DropBar'
-
 class SortDropZone extends Component {
 
     render() {
@@ -12,12 +10,10 @@ class SortDropZone extends Component {
 
         return (
             <div ref={drop} style={{
-                width: '100%',
-                height: '10px',
-                marginTop: '5px',
-                marginBottom: '5px'
+                height: '11px',
+                borderStyle: collectedProps.isOver && collectedProps.canDrop ? 'solid' : 'none',
+                borderColor: 'yellow'
               }}>
-                {collectedProps.isOver && collectedProps.canDrop && <DropBar />}
             </div>
         )
     }
