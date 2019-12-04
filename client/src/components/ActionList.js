@@ -11,7 +11,7 @@ export default class ActionList extends Component {
         return (
             <div>
                 <SortDropZone position={0} key="anotherkey" insertUpdateChildActions={insertUpdateChildActions} />
-                {child_actions.length === 0 ? <div><i>Add child actions below...</i></div> : child_actions.map((action, index) => <DndDuo 
+                {child_actions.length === 0 ? <div><i>Add actions below...</i></div> : child_actions.map((action, index) => <DndDuo 
                                                         key={action._id}
                                                         action={action} 
                                                         position={index+1} 

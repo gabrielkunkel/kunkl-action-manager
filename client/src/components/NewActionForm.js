@@ -15,12 +15,11 @@ class NewActionForm extends React.Component {
                   name="name" 
                   value={formValue}
                   autoFocus={true}
-                  fullWidth={true}
                   onChange={handleFormChange} 
                   placeholder="What is the action?" 
                   style={{
                     position: 'absolute', 
-                    width: '80%',
+                    width: '90%',
                     height: '45px',
                     bottom: 0
                     }}

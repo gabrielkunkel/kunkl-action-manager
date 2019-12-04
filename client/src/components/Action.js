@@ -17,10 +17,9 @@ class Action extends Component {
             <div ref={drag} onDoubleClick={() => updateActiveAction(action._id)} style={{
                 opacity: collectedProps.isDragging ? 0 : 1,
                 fontSize: 25,
-                fontWeight: 'bold',
+                fontWeight: collectedProps.isDragging ? 100 : 'bold',
                 padding: '3px',
                 margin: '0px',
-                // width: '80%',
                 borderStyle: isOver && canDrop ? 'dotted' : 'solid',
                 borderColor: "green",
                 cursor: 'grab'
@@ -35,6 +34,15 @@ class Action extends Component {
                         'aria-label': 'primary checkbox',
                     }}
                 />{action.text}</div>
+                {isOver && canDrop ? <div>{action.child_actions.map((child, index) => <span key={'dot' + index} style={{
+                      height: '7px',
+                      width: '7px',
+                      backgroundColor: '#bbb',
+                      borderRadius: '50%',
+                      display: 'inline-block',
+                      marginLeft: '3px'
+                }}> </span>)}</div> : <div></div>}
+
             </div>
         )
     }
