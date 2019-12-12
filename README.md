@@ -2,6 +2,12 @@
 
 To keep your long-range goals in mind while you accomplish your daily tasks.
 
+## Fun for me
+
+I especially enjoyed:
+* implementing a Higher-Order Component to use a hook with a class component
+* building mongoDB queries with mongoose that, sometimes, made multiple parallel queries
+
 ## JavaScript Technologies Used
 
 * Node.js
